@@ -1,26 +1,99 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #05040f;
+  --foreground: #f4f1ff;
+  --silver: #c9c9e6;
+  --violet: #8b7bff;
+  --moon: #f6e9c9;
+  --nebula: #4c2f8f;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-silver: var(--silver);
+  --color-violet: var(--violet);
+  --color-moon: var(--moon);
+  --color-nebula: var(--nebula);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif-display: var(--font-serif-display);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 2px;
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% -10%, #241a4d 0%, #0b0720 45%, #05040f 100%);
+}
+
+.starfield canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.holo-text {
+  background: linear-gradient(90deg, #c9c9e6, #f6e9c9, #8b7bff, #c9c9e6);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: holo-shift 6s linear infinite;
+}
+
+@keyframes holo-shift {
+  to {
+    background-position: 300% center;
+  }
+}
+
+.map-frame {
+  border: 1px solid rgba(201, 201, 230, 0.18);
+  box-shadow: 0 0 40px rgba(139, 123, 255, 0.12);
+  background: #e9e7f0;
+}
+
+.map-dark iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.map-vignette {
+  background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(5, 4, 15, 0.28) 100%);
+}
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(201, 201, 230, 0.18);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(139, 123, 255, 0.08);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
