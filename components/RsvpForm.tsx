@@ -70,32 +70,6 @@ export default function RsvpForm() {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="phone" className="text-sm text-silver/80">
-                Teléfono
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                maxLength={40}
-                className="rounded-xl border border-silver/20 bg-white/5 px-4 py-2.5 text-foreground outline-none transition focus:border-violet"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-sm text-silver/80">
-                Correo
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                maxLength={160}
-                className="rounded-xl border border-silver/20 bg-white/5 px-4 py-2.5 text-foreground outline-none transition focus:border-violet"
-              />
-            </div>
-          </div>
-
           {attendance === 'yes' && (
             <>
               <div className="flex flex-col gap-1.5">

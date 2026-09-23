@@ -248,17 +248,24 @@ export default async function Home() {
               <DressCodeInspiration />
             </section>
 
+            {/* Guest wall */}
+            <GuestWall entries={guestMessages} />
+
+            {/* Photo upload */}
+            <section className="flex flex-col gap-4">
+              <h2 className="font-serif-display holo-text text-2xl font-semibold sm:text-3xl">
+                Comparte tus fotos
+              </h2>
+              <PhotoUploadForm />
+            </section>
+
             {/* Gallery */}
             <section className="flex flex-col gap-4">
               <h2 className="font-serif-display holo-text text-2xl font-semibold sm:text-3xl">
                 Galería
               </h2>
               <GalleryGrid photos={galleryPhotos} />
-              <PhotoUploadForm />
             </section>
-
-            {/* Guest wall */}
-            <GuestWall entries={guestMessages} />
           </div>
 
           {/* Right column — sticky on desktop */}
