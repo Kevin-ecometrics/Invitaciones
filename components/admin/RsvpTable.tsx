@@ -20,7 +20,7 @@ async function downloadXlsx(rows: Rsvp[]) {
     const going = r.attendance === 'yes'
     return [
       r.full_name,
-      going ? 'Va' : 'No va',
+      going ? 'Va asistir' : 'No va asistir',
       going ? r.party_size : '',
       going ? (r.companion_names ?? []).join('; ') : '',
       going ? (r.dietary_notes ?? '') : '',
@@ -38,7 +38,7 @@ const FILTERS = [
   { value: 'pending', label: 'Pendientes' },
   { value: 'approved', label: 'Aprobados' },
   { value: 'rejected', label: 'Rechazados' },
-  { value: 'attending', label: 'Van' },
+  { value: 'attending', label: 'Van a asistir' },
   { value: 'not-attending', label: 'No asisten' },
   { value: 'all', label: 'Todos' },
 ] as const
@@ -150,7 +150,7 @@ export default function RsvpTable({ rsvps }: { rsvps: Rsvp[] }) {
                       : 'bg-silver/15 text-silver/80 border border-silver/30'
                   }`}
                 >
-                  {r.attendance === 'yes' ? 'Va' : 'No va'}
+                  {r.attendance === 'yes' ? 'Va asistir' : 'No asiste'}
                 </span>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${STATUS_STYLES[r.status]}`}>
                   {STATUS_LABELS[r.status]}
