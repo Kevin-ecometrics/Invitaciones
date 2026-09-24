@@ -2,10 +2,17 @@
 
 import { createAdminSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
+import { createHash, timingSafeEqual } from 'node:crypto'
 
 export interface LoginResult {
   ok: boolean
   error?: string
+}
+
+function timingSafeStringEqual(a: string, b: string): boolean {
+  const hashA = createHash('sha256').update(a).digest()
+  const hashB = createHash('sha256').update(b).digest()
+  return timingSafeEqual(hashA, hashB)
 }
 
 export async function login(_prevState: LoginResult | null, formData: FormData): Promise<LoginResult> {
@@ -19,7 +26,10 @@ export async function login(_prevState: LoginResult | null, formData: FormData):
     return { ok: false, error: 'Configuración de admin incompleta.' }
   }
 
-  if (username !== expectedUser || password !== expectedPass) {
+  const usernameMatches = timingSafeStringEqual(username, expectedUser)
+  const passwordMatches = timingSafeStringEqual(password, expectedPass)
+
+  if (!usernameMatches || !passwordMatches) {
     return { ok: false, error: 'Usuario o contraseña incorrectos.' }
   }
 

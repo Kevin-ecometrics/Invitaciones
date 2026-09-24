@@ -1,14 +1,15 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { login, type LoginResult } from './actions'
-import { StarIcon } from '@/components/Icons'
+import { EyeIcon, EyeOffIcon, StarIcon } from '@/components/Icons'
 import Starfield from '@/components/Starfield'
 
 const initialState: LoginResult | null = null
 
 export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(login, initialState)
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div className="relative min-h-screen">
@@ -41,14 +42,24 @@ export default function AdminLoginPage() {
               <label htmlFor="password" className="text-sm text-silver/70">
                 Contraseña
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                autoComplete="current-password"
-                className="rounded-xl border border-silver/20 bg-white/5 px-4 py-2.5 text-foreground outline-none transition focus:border-violet"
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  autoComplete="current-password"
+                  className="w-full rounded-xl border border-silver/20 bg-white/5 px-4 py-2.5 pr-11 text-foreground outline-none transition focus:border-violet"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  className="absolute inset-y-0 right-0 flex items-center px-3 text-silver/50 transition hover:text-silver"
+                >
+                  {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
 
             {state?.error && (
