@@ -36,7 +36,7 @@ export default function GalleryPanel({ photos }: { photos: GalleryPhoto[] }) {
       </div>
 
       {error && (
-        <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>
+        <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-[color:var(--acc-bad)]">{error}</p>
       )}
 
       <Section title="Pendientes" count={pendingPhotos.length}>
@@ -45,7 +45,7 @@ export default function GalleryPanel({ photos }: { photos: GalleryPhoto[] }) {
             <button
               disabled={pending}
               onClick={() => startTransition(() => { approveGalleryPhoto(photo.id) })}
-              className="flex items-center justify-center gap-1 rounded-lg bg-emerald-500/15 px-2.5 py-1.5 text-xs font-medium text-emerald-300 transition hover:bg-emerald-500/25 disabled:opacity-50"
+              className="flex items-center justify-center gap-1 rounded-lg bg-emerald-500/15 px-2.5 py-1.5 text-xs font-medium text-[color:var(--acc-good)] transition hover:bg-emerald-500/25 disabled:opacity-50"
             >
               <CheckIcon className="h-3.5 w-3.5" />
               Aprobar
@@ -53,7 +53,7 @@ export default function GalleryPanel({ photos }: { photos: GalleryPhoto[] }) {
             <button
               disabled={pending}
               onClick={() => startTransition(() => { rejectGalleryPhoto(photo.id, '') })}
-              className="flex items-center justify-center gap-1 rounded-lg bg-red-500/15 px-2.5 py-1.5 text-xs font-medium text-red-300 transition hover:bg-red-500/25 disabled:opacity-50"
+              className="flex items-center justify-center gap-1 rounded-lg bg-red-500/15 px-2.5 py-1.5 text-xs font-medium text-[color:var(--acc-bad)] transition hover:bg-red-500/25 disabled:opacity-50"
             >
               <XIcon className="h-3.5 w-3.5" />
               Rechazar
@@ -85,7 +85,7 @@ export default function GalleryPanel({ photos }: { photos: GalleryPhoto[] }) {
                     if (res && res.ok === false) setError(res.error ?? 'No se pudo mostrar la foto.')
                   })
                 }
-                className="flex items-center justify-center gap-1 rounded-lg border border-emerald-400/30 px-2.5 py-1.5 text-xs text-emerald-300 transition hover:bg-emerald-500/10 disabled:opacity-50"
+                className="flex items-center justify-center gap-1 rounded-lg border border-emerald-400/30 px-2.5 py-1.5 text-xs text-[color:var(--acc-good)] transition hover:bg-emerald-500/10 disabled:opacity-50"
               >
                 <EyeIcon className="h-3.5 w-3.5" />
                 Mostrar
@@ -94,7 +94,7 @@ export default function GalleryPanel({ photos }: { photos: GalleryPhoto[] }) {
             <button
               disabled={pending}
               onClick={() => startTransition(() => { deleteGalleryPhoto(photo.id, photo.storage_path) })}
-              className="flex items-center justify-center gap-1 rounded-lg border border-red-400/30 px-2.5 py-1.5 text-xs text-red-300 transition hover:bg-red-500/10 disabled:opacity-50"
+              className="flex items-center justify-center gap-1 rounded-lg border border-red-400/30 px-2.5 py-1.5 text-xs text-[color:var(--acc-bad)] transition hover:bg-red-500/10 disabled:opacity-50"
             >
               <TrashIcon className="h-3.5 w-3.5" />
               Eliminar
@@ -110,7 +110,7 @@ export default function GalleryPanel({ photos }: { photos: GalleryPhoto[] }) {
             <button
               disabled={pending}
               onClick={() => startTransition(() => { deleteGalleryPhoto(photo.id, photo.storage_path) })}
-              className="col-span-2 flex items-center justify-center gap-1 rounded-lg border border-red-400/30 px-2.5 py-1.5 text-xs text-red-300 transition hover:bg-red-500/10 disabled:opacity-50"
+              className="col-span-2 flex items-center justify-center gap-1 rounded-lg border border-red-400/30 px-2.5 py-1.5 text-xs text-[color:var(--acc-bad)] transition hover:bg-red-500/10 disabled:opacity-50"
             >
               <TrashIcon className="h-3.5 w-3.5" />
               Eliminar
@@ -128,7 +128,7 @@ function Section({ title, count, children }: { title: string; count: number; chi
     <div className="flex flex-col gap-3">
       <h3 className="flex items-center gap-2 text-sm font-semibold text-silver/70">
         {title}
-        <span className="rounded-full bg-white/5 px-2 py-0.5 text-xs text-silver/50">{count}</span>
+        <span className="rounded-full bg-silver/10 px-2 py-0.5 text-xs text-silver/70">{count}</span>
       </h3>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">{children}</div>
     </div>
@@ -136,7 +136,7 @@ function Section({ title, count, children }: { title: string; count: number; chi
 }
 
 function EmptyNote({ text }: { text: string }) {
-  return <p className="col-span-full text-sm text-silver/40">{text}</p>
+  return <p className="col-span-full text-sm text-silver/60">{text}</p>
 }
 
 function PhotoCard({
@@ -164,7 +164,7 @@ function PhotoCard({
           </span>
         )}
       </div>
-      {photo.submitted_by_name && <p className="truncate text-xs text-silver/50">{photo.submitted_by_name}</p>}
+      {photo.submitted_by_name && <p className="truncate text-xs text-silver/65">{photo.submitted_by_name}</p>}
       <div className="grid grid-cols-2 gap-1.5">{children}</div>
     </div>
   )

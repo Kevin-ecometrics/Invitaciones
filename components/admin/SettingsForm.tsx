@@ -36,14 +36,14 @@ export default function SettingsForm({ settings }: { settings: EventSettings | n
             value={form[key]}
             onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
             rows={3}
-            className="rounded-xl border border-silver/20 bg-white/5 px-3.5 py-2.5 text-foreground outline-none transition focus:border-violet"
+            className="rounded-xl border border-silver/20 bg-[color:var(--field-bg)] px-3.5 py-2.5 text-foreground outline-none transition focus:border-violet"
           />
         ) : (
           <input
             type={type}
             value={form[key]}
             onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
-            className="rounded-xl border border-silver/20 bg-white/5 px-3.5 py-2.5 text-foreground outline-none transition focus:border-violet"
+            className="rounded-xl border border-silver/20 bg-[color:var(--field-bg)] px-3.5 py-2.5 text-foreground outline-none transition focus:border-violet"
           />
         )}
       </div>
@@ -53,14 +53,14 @@ export default function SettingsForm({ settings }: { settings: EventSettings | n
   return (
     <div className="glass-card flex flex-col gap-6 rounded-2xl p-5 sm:p-6">
       <div className="flex flex-col gap-4">
-        <p className="text-xs font-semibold uppercase tracking-widest text-silver/50">General</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-silver/70">General</p>
         {field('event_title', 'Título del evento')}
         {field('hero_headline', 'Frase principal (hero)', 'textarea')}
         {field('event_date', 'Fecha y hora del evento', 'datetime-local')}
       </div>
 
       <div className="flex flex-col gap-4 border-t border-silver/10 pt-5">
-        <p className="text-xs font-semibold uppercase tracking-widest text-silver/50">Horarios y lugar</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-silver/70">Horarios y lugar</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {field('welcome_time', 'Hora de bienvenida')}
           {field('dinner_time', 'Hora de cena')}
@@ -70,7 +70,7 @@ export default function SettingsForm({ settings }: { settings: EventSettings | n
       </div>
 
       <div className="flex flex-col gap-4 border-t border-silver/10 pt-5">
-        <p className="text-xs font-semibold uppercase tracking-widest text-silver/50">Dress code</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-silver/70">Dress code</p>
         {field('dress_code_title', 'Título dress code')}
         {field('dress_code_description', 'Descripción dress code', 'textarea')}
       </div>
@@ -91,7 +91,7 @@ export default function SettingsForm({ settings }: { settings: EventSettings | n
           {pending ? 'Guardando…' : 'Guardar cambios'}
         </button>
         {saved && (
-          <span className="flex items-center gap-1.5 text-sm text-emerald-300">
+          <span className="flex items-center gap-1.5 text-sm text-[color:var(--acc-good)]">
             <CheckIcon className="h-4 w-4" />
             Guardado
           </span>

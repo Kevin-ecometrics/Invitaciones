@@ -97,3 +97,67 @@ textarea:focus-visible,
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
 }
+
+.admin-theme {
+  --background: #eef1f6;
+  --foreground: #0f172a;
+  --silver: #334155;
+  --violet: #6d5ae0;
+  --moon: #5b4636;
+  --acc-good: #047857;
+  --acc-warn: #b45309;
+  --acc-bad: #b91c1c;
+  --field-bg: #ffffff;
+}
+
+.admin-theme-dark {
+  --background: #05040f;
+  --foreground: #f4f1ff;
+  --silver: #c9c9e6;
+  --violet: #8b7bff;
+  --moon: #f6e9c9;
+  --acc-good: #34d399;
+  --acc-warn: #fbbf24;
+  --acc-bad: #f87171;
+  --field-bg: rgba(255, 255, 255, 0.06);
+}
+
+.admin-theme .glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(15, 23, 42, 0.28);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.admin-theme .holo-text {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  color: var(--violet);
+  animation: none;
+}
+
+.admin-theme :is(input, textarea) {
+  color-scheme: light;
+}
+
+.admin-theme-dark :is(input, textarea) {
+  color-scheme: dark;
+}
+
+.admin-theme :is(input, textarea)::placeholder {
+  color: color-mix(in oklab, var(--silver) 60%, transparent);
+}
+
+.admin-theme-dark :is(input, textarea)::placeholder {
+  color: color-mix(in oklab, var(--silver) 55%, transparent);
+}
+
+.admin-theme :is(input, textarea):-webkit-autofill {
+  -webkit-text-fill-color: var(--foreground);
+  box-shadow: 0 0 0 1000px var(--field-bg) inset;
+}
+
+.admin-theme-dark :is(input, textarea):-webkit-autofill {
+  -webkit-text-fill-color: var(--foreground);
+  box-shadow: 0 0 0 1000px var(--field-bg) inset;
+}
