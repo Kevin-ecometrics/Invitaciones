@@ -10,8 +10,18 @@ export interface SubmitGalleryPhotoResult {
   error?: string
 }
 
-const MAX_FILE_BYTES = 8 * 1024 * 1024
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic']
+const MAX_FILE_BYTES = 25 * 1024 * 1024
+const ALLOWED_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/heic',
+  'image/heif',
+  'image/x-heic',
+  'image/x-heif',
+  'image/heic-sequence',
+  'image/heif-sequence',
+]
 const MAX_PHOTOS_PER_SUBMITTER = 5
 const SUBMITTER_COOKIE = 'gallery_submitter'
 
