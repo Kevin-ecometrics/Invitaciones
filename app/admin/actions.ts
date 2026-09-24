@@ -154,16 +154,11 @@ export interface UpdateEventSettingsInput {
   dress_code_title: string
   dress_code_description: string
   hero_headline: string
-  gift_registry_links: { label: string; url: string }[]
 }
 
 export async function updateEventSettings(input: UpdateEventSettingsInput) {
   await requireAdmin()
   const supabase = createAdminClient()
-
-  const cleanLinks = input.gift_registry_links
-    .map((l) => ({ label: l.label.trim(), url: l.url.trim() }))
-    .filter((l) => l.label && l.url)
 
   const { error } = await supabase
     .from('event_settings')
@@ -177,7 +172,6 @@ export async function updateEventSettings(input: UpdateEventSettingsInput) {
       dress_code_title: input.dress_code_title || null,
       dress_code_description: input.dress_code_description || null,
       hero_headline: input.hero_headline || null,
-      gift_registry_links: cleanLinks,
       updated_at: new Date().toISOString(),
     })
     .eq('id', 1)

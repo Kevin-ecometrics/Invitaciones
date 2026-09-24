@@ -16,8 +16,8 @@ export const getPublishedGallery = cache(async (): Promise<GalleryPhoto[]> => {
     .select('*')
     .eq('status', 'approved')
     .eq('is_published', true)
-    .order('sort_order', { ascending: true })
-    .order('created_at', { ascending: true })
+    .order('sort_order', { ascending: false })
+    .order('created_at', { ascending: false })
     .limit(5)
   return data ?? []
 })

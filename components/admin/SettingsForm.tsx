@@ -2,8 +2,8 @@
 
 import { useState, useTransition } from 'react'
 import { updateEventSettings } from '@/app/admin/actions'
-import type { EventSettings, GiftRegistryLink } from '@/lib/types'
-import { CheckIcon, GiftIcon, TrashIcon } from '@/components/Icons'
+import type { EventSettings } from '@/lib/types'
+import { CheckIcon } from '@/components/Icons'
 
 function toLocalInputValue(iso: string | null) {
   if (!iso) return ''
@@ -24,9 +24,6 @@ export default function SettingsForm({ settings }: { settings: EventSettings | n
     dress_code_description: settings?.dress_code_description ?? '',
     hero_headline: settings?.hero_headline ?? '',
   })
-  const [giftLinks, setGiftLinks] = useState<GiftRegistryLink[]>(
-    settings?.gift_registry_links?.length ? settings.gift_registry_links : []
-  )
   const [pending, startTransition] = useTransition()
   const [saved, setSaved] = useState(false)
 
@@ -78,62 +75,13 @@ export default function SettingsForm({ settings }: { settings: EventSettings | n
         {field('dress_code_description', 'Descripción dress code', 'textarea')}
       </div>
 
-      <div className="flex flex-col gap-4 border-t border-silver/10 pt-5">
-        <div className="flex items-center justify-between">
-          <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-silver/50">
-            <GiftIcon className="h-4 w-4 text-moon" />
-            Mesa de regalos / lista de deseos
-          </p>
-          <button
-            type="button"
-            onClick={() => setGiftLinks((links) => [...links, { label: '', url: '' }])}
-            className="text-xs font-medium text-moon hover:underline"
-          >
-            + Agregar link
-          </button>
-        </div>
-        {giftLinks.length === 0 && (
-          <p className="text-sm text-silver/40">
-            Pendiente — agrega aquí los links de Amazon, Liverpool, etc. cuando los tengas listos.
-          </p>
-        )}
-        {giftLinks.map((link, i) => (
-          <div key={i} className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_2fr_auto]">
-            <input
-              placeholder="Nombre (ej. Amazon)"
-              value={link.label}
-              onChange={(e) =>
-                setGiftLinks((links) => links.map((l, idx) => (idx === i ? { ...l, label: e.target.value } : l)))
-              }
-              className="rounded-xl border border-silver/20 bg-white/5 px-3.5 py-2.5 text-foreground outline-none transition focus:border-violet"
-            />
-            <input
-              placeholder="https://..."
-              value={link.url}
-              onChange={(e) =>
-                setGiftLinks((links) => links.map((l, idx) => (idx === i ? { ...l, url: e.target.value } : l)))
-              }
-              className="rounded-xl border border-silver/20 bg-white/5 px-3.5 py-2.5 text-foreground outline-none transition focus:border-violet"
-            />
-            <button
-              type="button"
-              onClick={() => setGiftLinks((links) => links.filter((_, idx) => idx !== i))}
-              className="flex items-center justify-center rounded-xl border border-red-400/30 px-3 text-red-300 transition hover:bg-red-500/10"
-              aria-label="Eliminar link"
-            >
-              <TrashIcon className="h-4 w-4" />
-            </button>
-          </div>
-        ))}
-      </div>
-
       <div className="flex items-center gap-3 border-t border-silver/10 pt-5">
         <button
           disabled={pending}
           onClick={() =>
             startTransition(async () => {
               const eventDateIso = form.event_date ? new Date(form.event_date).toISOString() : ''
-              await updateEventSettings({ ...form, event_date: eventDateIso, gift_registry_links: giftLinks })
+              await updateEventSettings({ ...form, event_date: eventDateIso })
               setSaved(true)
               setTimeout(() => setSaved(false), 2000)
             })

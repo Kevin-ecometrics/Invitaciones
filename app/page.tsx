@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Starfield from '@/components/Starfield'
 import DressCodeInspiration from '@/components/DressCodeInspiration'
+import { MdDinnerDining } from 'react-icons/md'
 import {
   CheckIcon,
   ClockIcon,
@@ -51,19 +52,6 @@ const MAPS_QUERY = encodeURIComponent(
 )
 
 const MAPS_EMBED_SRC = `https://maps.google.com/maps?q=${MAPS_QUERY}&z=16&output=embed`
-
-const DETAIL_ROWS = (settings: Awaited<ReturnType<typeof getEventSettings>>) => [
-  {
-    icon: ClockIcon,
-    label: 'Horario',
-    content: `Bienvenida ${settings?.welcome_time || '8:00 PM'} · Cena ${settings?.dinner_time || '9:00 PM'}`,
-  },
-  {
-    icon: ParkingIcon,
-    label: 'Estacionamiento',
-    content: 'Disponible en el salón',
-  },
-]
 
 export default async function Home() {
   const [settings, photos, guestMessages] = await Promise.all([
@@ -180,16 +168,33 @@ export default async function Home() {
             </section>
 
             {/* Detail rows */}
-            <section className="flex flex-col divide-y divide-silver/10 overflow-hidden rounded-2xl border border-silver/10">
-              {DETAIL_ROWS(settings).map((row) => (
-                <div key={row.label} className="flex items-center gap-3 px-5 py-4">
-                  <row.icon className="h-5 w-5 shrink-0 text-moon" />
-                  <div className="flex flex-col">
-                    <span className="text-xs uppercase tracking-wide text-silver/50">{row.label}</span>
-                    <span className="text-sm text-silver/90">{row.content}</span>
-                  </div>
+            <section className="flex flex-col gap-4">
+              <h2 className="flex items-center gap-2 font-serif-display text-xl font-semibold text-silver">
+                <ClockIcon className="h-5 w-5 text-moon" />
+                Detalles del evento
+              </h2>
+              <div className="flex flex-col divide-y divide-silver/10 overflow-hidden rounded-2xl border border-silver/10">
+              <div className="flex items-center gap-3 px-5 py-4">
+                <ClockIcon className="h-5 w-5 shrink-0 text-moon" />
+                <div className="flex flex-col">
+                  <span className="text-xs uppercase tracking-wide text-silver/50">Bienvenida</span>
+                  <span className="text-sm text-silver/90">{settings?.welcome_time || '8:00 PM'}</span>
                 </div>
-              ))}
+              </div>
+              <div className="flex items-center gap-3 px-5 py-4">
+                <MdDinnerDining className="h-5 w-5 shrink-0 text-moon" />
+                <div className="flex flex-col">
+                  <span className="text-xs uppercase tracking-wide text-silver/50">Cena</span>
+                  <span className="text-sm text-silver/90">{settings?.dinner_time || '9:00 PM'}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 px-5 py-4">
+                <ParkingIcon className="h-5 w-5 shrink-0 text-moon" />
+                <div className="flex flex-col">
+                  <span className="text-xs uppercase tracking-wide text-silver/50">Estacionamiento</span>
+                  <span className="text-sm text-silver/90">Disponible en el salón</span>
+                </div>
+              </div>
               <div className="flex items-center gap-3 px-5 py-4">
                 <SparkleIcon className="h-5 w-5 shrink-0 text-moon" />
                 <div className="flex flex-col">
@@ -235,6 +240,16 @@ export default async function Home() {
                   </div>
                 </div>
               )}
+              <div className="flex items-center gap-3 px-5 py-4">
+                <GiftIcon className="h-5 w-5 shrink-0 text-moon" />
+                <div className="flex flex-col">
+                  <span className="text-xs uppercase tracking-wide text-silver/50">Regalos</span>
+                  <span className="text-sm text-silver/90">
+                    Un regalo o un sobre para la cumpleañera.
+                  </span>
+                </div>
+              </div>
+              </div>
             </section>
 
             {/* Dress code reference gallery */}
