@@ -19,8 +19,9 @@ import PhotoUploadForm from '@/components/PhotoUploadForm'
 import GalleryGrid from '@/components/GalleryGrid'
 import GuestWall from '@/components/GuestWall'
 import InvitationCard from '@/components/InvitationCard'
-import { getEventSettings, getGuestWallMessages, getPublishedGallery } from '@/lib/data'
+import { getEventSettings, getGuestWallMessages, getPublishedGallery, getPublishedGalleryCount } from '@/lib/data'
 import { publicStorageUrl } from '@/lib/storage-url'
+import { GALLERY_PAGE_SIZE } from '@/lib/gallery-constants'
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getEventSettings()
@@ -52,9 +53,10 @@ const MAPS_QUERY = encodeURIComponent(
 const MAPS_EMBED_SRC = `https://maps.google.com/maps?q=${MAPS_QUERY}&z=16&output=embed`
 
 export default async function Home() {
-  const [settings, photos, guestMessages] = await Promise.all([
+  const [settings, photos, photoCount, guestMessages] = await Promise.all([
     getEventSettings(),
     getPublishedGallery(),
+    getPublishedGalleryCount(),
     getGuestWallMessages(),
   ])
 
@@ -63,6 +65,8 @@ export default async function Home() {
     ? publicStorageUrl('music', settings.music_storage_path)
     : null
   const giftRegistryLinks = settings?.gift_registry_links ?? []
+
+  const galleryTotalPages = Math.ceil(photoCount / GALLERY_PAGE_SIZE)
 
   const galleryPhotos = photos.map((p) => ({
     id: p.id,
@@ -273,11 +277,11 @@ export default async function Home() {
             </section>
 
             {/* Gallery */}
-            <section className="flex flex-col gap-4">
+            <section id="galeria" className="flex scroll-mt-20 flex-col gap-4">
               <h2 className="font-serif-display holo-text text-2xl font-semibold sm:text-3xl">
                 Galería
               </h2>
-              <GalleryGrid photos={galleryPhotos} />
+              <GalleryGrid photos={galleryPhotos} totalPages={galleryTotalPages} />
             </section>
           </div>
 

@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { publicStorageUrl } from '@/lib/storage-url'
+import { GALLERY_PAGE_SIZE } from '@/lib/gallery-constants'
 import { cookies } from 'next/headers'
 import { randomUUID } from 'crypto'
 
@@ -108,4 +110,32 @@ export async function submitGalleryPhoto(
   }
 
   return { ok: true }
+}
+
+const PAGE_SIZE = GALLERY_PAGE_SIZE
+
+export interface GalleryPage {
+  photos: { id: string; url: string; alt: string }[]
+  hasMore: boolean
+}
+
+export async function getGalleryPage(page: number): Promise<GalleryPage> {
+  const supabase = await createClient()
+  const from = (page - 1) * PAGE_SIZE
+  const { data } = await supabase
+    .from('gallery_photos')
+    .select('*')
+    .eq('status', 'approved')
+    .eq('is_published', true)
+    .order('sort_order', { ascending: false })
+    .order('created_at', { ascending: false })
+    .range(from, from + PAGE_SIZE - 1)
+
+  const photos = (data ?? []).map((p) => ({
+    id: p.id,
+    url: publicStorageUrl('gallery', p.storage_path),
+    alt: p.alt_text || 'Foto de la celebración',
+  }))
+
+  return { photos, hasMore: (data?.length ?? 0) === PAGE_SIZE }
 }

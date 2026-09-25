@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { GALLERY_PAGE_SIZE } from '@/lib/gallery-constants'
 import type { EventSettings, GalleryPhoto, Rsvp } from '@/lib/types'
 
 export const getEventSettings = cache(async (): Promise<EventSettings | null> => {
@@ -18,8 +19,18 @@ export const getPublishedGallery = cache(async (): Promise<GalleryPhoto[]> => {
     .eq('is_published', true)
     .order('sort_order', { ascending: false })
     .order('created_at', { ascending: false })
-    .limit(5)
+    .limit(GALLERY_PAGE_SIZE)
   return data ?? []
+})
+
+export const getPublishedGalleryCount = cache(async (): Promise<number> => {
+  const supabase = await createClient()
+  const { count } = await supabase
+    .from('gallery_photos')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'approved')
+    .eq('is_published', true)
+  return count ?? 0
 })
 
 export type GuestWallEntry = Pick<Rsvp, 'id' | 'full_name' | 'message' | 'created_at'>
@@ -34,6 +45,6 @@ export const getGuestWallMessages = cache(async (): Promise<GuestWallEntry[]> =>
     .not('message', 'is', null)
     .neq('message', '')
     .order('created_at', { ascending: false })
-    .limit(20)
+    .limit(500)
   return data ?? []
 })
