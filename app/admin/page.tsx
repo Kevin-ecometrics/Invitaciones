@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { Rsvp, GalleryPhoto, EventSettings } from '@/lib/types'
 import RsvpTable from '@/components/admin/RsvpTable'
@@ -9,6 +10,10 @@ import { StarIcon, ExternalLinkIcon, LogoutIcon, UsersIcon, ImageIcon, SlidersIc
 import { logout } from './actions'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Panel de administración',
+}
 
 async function getData() {
   const supabase = createAdminClient()
